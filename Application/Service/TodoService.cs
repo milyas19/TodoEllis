@@ -12,6 +12,7 @@ namespace Application.Service
         List<TodoDto> GetTodoList();
         TodoDto GetTodoById(int id);
         TodoDto LagreTodo(CreateTodoDto createTodoDto);
+        bool SletteTodo(int id);
     }
 
     public class TodoService : ITodoService
@@ -59,6 +60,11 @@ namespace Application.Service
                 Date = response.Dato
             };
             return todoDtoObj;
+        }
+
+        public bool SletteTodo(int id)
+        {
+            return _todoDBWrapper.DeleteTodo(id);
         }
     }
 }

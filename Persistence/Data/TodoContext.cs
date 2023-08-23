@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.Data
 {
-    public class TodoContext  : DbContext
+    public class TodoContext : DbContext
     {
         public DbSet<Todo> Todos { get; set; }
-        
+
         public TodoContext(DbContextOptions options) : base(options)
         { }
 

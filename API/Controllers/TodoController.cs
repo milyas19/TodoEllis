@@ -37,5 +37,11 @@ namespace API.Controllers
             //6. Vi henter todoDto object som respons fra TodoService og returnere til slutt brukeren
             return response;
         }
+
+        [HttpDelete("id")]
+        public bool SletteTodoObject(int id)
+        {
+            return _todoService.SletteTodo(id);
+        }
     }
 }

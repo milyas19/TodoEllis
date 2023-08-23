@@ -1,4 +1,6 @@
-﻿using Entities;
+﻿using System.Reflection.Metadata.Ecma335;
+using System.Xml;
+using Entities;
 
 namespace Persistence.Data.DBWrapper
 {
@@ -10,6 +12,7 @@ namespace Persistence.Data.DBWrapper
         {
             _todoContext = todoContext;
         }
+
         public Todo GetTodoById(int id)
         {
             var todo = _todoContext.Todos.Where(x => x.Id == id).SingleOrDefault();
@@ -30,6 +33,30 @@ namespace Persistence.Data.DBWrapper
             _todoContext.SaveChanges();
             //4. Vi returnerer todo object til service
             return todo;
+        }
+
+        public bool DeleteTodo(int id)
+        {
+            var _todoSkalSlettes = _todoContext.Todos.Where(x => x.Id == id).SingleOrDefault();
+            if (_todoSkalSlettes == null)
+                return false;
+            else
+            {
+                try
+                {
+                    _todoContext.Remove(_todoSkalSlettes);
+                    if (_todoContext.SaveChanges() > 0)
+                        return true;
+                    else
+                        return false;
+                }
+                catch (System.Exception e)
+                {
+
+                    var _error = e.Message.ToString();
+                    return false;
+                }
+            }
         }
     }
 }
