@@ -7,7 +7,6 @@ namespace Persistence.Data.DBWrapper
         List<Todo> GetTodoList();
         Todo GetTodoById(int id);
         Todo SaveTodo(Todo todo);
-
         bool DeleteTodo(int id);
     }
 }
