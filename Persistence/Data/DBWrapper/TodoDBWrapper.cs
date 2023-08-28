@@ -1,6 +1,4 @@
-﻿using System.Reflection.Metadata.Ecma335;
-using System.Xml;
-using Entities;
+﻿using Entities;
 
 namespace Persistence.Data.DBWrapper
 {
@@ -28,10 +26,8 @@ namespace Persistence.Data.DBWrapper
 
         public Todo SaveTodo(Todo todo)
         {
-            //3. Henter data fra TodoService og lagre den i databasen
             _todoContext.Add(todo);
             _todoContext.SaveChanges();
-            //4. Vi returnerer todo object til service
             return todo;
         }
 
@@ -39,7 +35,7 @@ namespace Persistence.Data.DBWrapper
         {
             var _todoSkalSlettes = _todoContext.Todos.Where(x => x.Id == id).SingleOrDefault();
             if (_todoSkalSlettes == null)
-                return false;
+                throw new Exception("Record does not exist in database");
             else
             {
                 try
@@ -50,13 +46,20 @@ namespace Persistence.Data.DBWrapper
                     else
                         return false;
                 }
-                catch (System.Exception e)
+                catch (Exception e)
                 {
 
                     var _error = e.Message.ToString();
                     return false;
                 }
             }
+        }
+
+        public Todo UpdateTodo(Todo todo)
+        {
+            _todoContext.Update(todo);
+            _todoContext.SaveChanges();
+            return todo;
         }
     }
 }

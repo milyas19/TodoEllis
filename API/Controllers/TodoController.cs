@@ -38,6 +38,13 @@ namespace API.Controllers
             return response;
         }
 
+        [HttpPut]
+        public TodoDto UpdateTodoObject(TodoDto todoDto)
+        {
+            var response = _todoService.UpdateTodo(todoDto);
+            return response;
+        }
+
         [HttpDelete("id")]
         public bool SletteTodoObject(int id)
         {

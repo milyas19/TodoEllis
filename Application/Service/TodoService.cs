@@ -13,6 +13,7 @@ namespace Application.Service
         TodoDto GetTodoById(int id);
         TodoDto LagreTodo(CreateTodoDto createTodoDto);
         bool SletteTodo(int id);
+        TodoDto UpdateTodo(TodoDto todoDto);
     }
 
     public class TodoService : ITodoService
@@ -65,6 +66,27 @@ namespace Application.Service
         public bool SletteTodo(int id)
         {
             return _todoDBWrapper.DeleteTodo(id);
+        }
+
+        public TodoDto UpdateTodo(TodoDto todoDto)
+        {
+            var todoObj = new Todo()
+            {
+                Id = todoDto.Id,
+                ErFerdig = todoDto.IsFinished,
+                Beskrivelse = todoDto.Description,
+                Dato = todoDto.Date
+            };
+            var response = _todoDBWrapper.UpdateTodo(todoObj);
+
+            var todoDtoObj = new TodoDto()
+            {
+                Id = response.Id,
+                IsFinished = response.ErFerdig,
+                Description = response.Beskrivelse,
+                Date = response.Dato
+            };
+            return todoDtoObj;
         }
     }
 }
