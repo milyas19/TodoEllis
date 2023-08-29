@@ -23,7 +23,7 @@ namespace API.Controllers
             return _todoService.GetTodoList();
         }
 
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public TodoDto GetTodoById(int id)
         {
             return _todoService.GetTodoById(id);
@@ -45,10 +45,13 @@ namespace API.Controllers
             return response;
         }
 
-        [HttpDelete("id")]
+        [HttpDelete("{id}")]
         public bool SletteTodoObject(int id)
         {
-            return _todoService.SletteTodo(id);
+            var reponse = _todoService.SletteTodo(id);
+            if(reponse == false)
+                return false;
+            return true;
         }
     }
 }
