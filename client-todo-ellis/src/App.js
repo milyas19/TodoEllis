@@ -19,7 +19,7 @@ const App = () => {
   function deleteById(deletedTodo) {
     todoApi.apiV1TodoIdDelete(deletedTodo, (error, data, response) => {
       if (data === true) {
-        alert("Record is deleted successfully");
+        alert("Record is now deleted successfully");
       }
 
       if (response.text != null) {
