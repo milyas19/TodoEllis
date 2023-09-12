@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import { TodoApi } from "../src/api/TodoApi";
+import moment from "moment";
+import { NewForm } from "./components/NewForm";
 
 const todoApi = new TodoApi();
 const App = () => {
   const [todoList, setTodoList] = useState([]);
+  const [aapneNyttSkjema, setAapneNyttSkjema] = useState(false);
 
   useEffect(() => {
     todoApi.apiV1TodoGet((error, data, response) => {
@@ -27,9 +30,18 @@ const App = () => {
 
   return (
     <div className="App">
-      <div>
-        <header className="App-header">Elisabeth sin TodoApp</header>
+      <div className="App-header">
+        <header>Elisabeth sin TodoApp</header>
+        <button type="button" onClick={() => setAapneNyttSkjema(true)}>
+          {" "}
+          Opprett ny oppgave
+        </button>
       </div>
+      {aapneNyttSkjema ? (
+        <NewForm elisabeth={aapneNyttSkjema} kenneth={setAapneNyttSkjema} />
+      ) : (
+        <></>
+      )}
       <div>
         <table id="customers">
           <thead>
@@ -44,7 +56,7 @@ const App = () => {
             {todoList?.map((item) => {
               return (
                 <tr key={item.id}>
-                  <td>{item.date}</td>
+                  <td>{moment(item.date).format("DD-MM-YYYY")}</td>
                   <td>{item.description}</td>
                   <td>{item.isFinished === true ? "Completed" : "Active"}</td>
                   <td>
