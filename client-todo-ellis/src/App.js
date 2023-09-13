@@ -38,7 +38,12 @@ const App = () => {
         </button>
       </div>
       {aapneNyttSkjema ? (
-        <NewForm elisabeth={aapneNyttSkjema} kenneth={setAapneNyttSkjema} />
+        <NewForm
+          elisabeth={aapneNyttSkjema}
+          kenneth={setAapneNyttSkjema}
+          todoList={todoList}
+          setTodoList={setTodoList}
+        />
       ) : (
         <></>
       )}
