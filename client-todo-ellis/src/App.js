@@ -34,7 +34,7 @@ const App = () => {
         <header>Elisabeth sin TodoApp</header>
         <button type="button" onClick={() => setAapneNyttSkjema(true)}>
           {" "}
-          Opprett ny oppgave
+          Opprett ny oppgave                    
         </button>
       </div>
       {aapneNyttSkjema ? (
