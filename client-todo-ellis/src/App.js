@@ -3,11 +3,15 @@ import "./App.css";
 import { TodoApi } from "../src/api/TodoApi";
 import moment from "moment";
 import { NewForm } from "./components/NewForm";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const todoApi = new TodoApi();
 const App = () => {
   const [todoList, setTodoList] = useState([]);
   const [aapneNyttSkjema, setAapneNyttSkjema] = useState(false);
+  const [openEditSkjema, setOpenEditSkjema] = useState(false);
+  const [editTodo, setEditTodo] = useState({});
 
   useEffect(() => {
     todoApi.apiV1TodoGet((error, data, response) => {
@@ -19,28 +23,45 @@ const App = () => {
   function deleteById(deletedTodo) {
     todoApi.apiV1TodoIdDelete(deletedTodo, (error, data, response) => {
       if (data === true) {
-        alert("Record is now deleted successfully");
+        toast.info("Raden er slettet 🎉 !", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
       }
-
       if (response.text != null) {
         console.log(response.text);
       }
     });
   }
 
+  const updateTodoObj = (e, item) => {
+    setEditTodo({
+      emne: item.description,
+      dato: moment(item.date).format("yyyy-MM-DD"),
+      id: item.id,
+      erFerdig: item.isFinished,
+    });
+  };
+
+  console.log(editTodo);
   return (
     <div className="App">
       <div className="App-header">
         <header>Elisabeth sin TodoApp</header>
-        <button type="button" onClick={() => setAapneNyttSkjema(true)}>
+        <button
+          type="button"
+          onClick={() => {
+            setAapneNyttSkjema(true);
+            setOpenEditSkjema(false);
+          }}
+        >
           {" "}
           Opprett ny oppgave
         </button>
       </div>
       {aapneNyttSkjema ? (
         <NewForm
-          elisabeth={aapneNyttSkjema}
-          kenneth={setAapneNyttSkjema}
+          aapneNyttSkjema={aapneNyttSkjema}
+          setAapneNyttSkjema={setAapneNyttSkjema}
           todoList={todoList}
           setTodoList={setTodoList}
         />
@@ -67,10 +88,25 @@ const App = () => {
                   <td>
                     <button
                       type="button"
+                      className="editButton"
+                      id={item.id}
+                      value={item}
+                      onClick={(e) => {
+                        updateTodoObj(e, item);
+                        setOpenEditSkjema(true);
+                        setAapneNyttSkjema(false);
+                      }}
+                    >
+                      Rediger
+                    </button>
+                    /
+                    <button
+                      type="button"
                       className="deleteButton"
                       id={item.id}
                       onClick={() => {
                         deleteById(item.id);
+
                         let index = todoList.findIndex((x) => x.id === item.id);
                         setTodoList([
                           ...todoList.slice(0, index),
@@ -84,6 +120,20 @@ const App = () => {
                 </tr>
               );
             })}
+            {openEditSkjema ? (
+              <NewForm
+                aapneNyttSkjema={null}
+                setAapneNyttSkjema={null}
+                todoList={todoList}
+                setTodoList={setTodoList}
+                editTodoObj={editTodo}
+                openEditSkjema={openEditSkjema}
+                setOpenEditSkjema={setOpenEditSkjema}
+              />
+            ) : (
+              <></>
+            )}
+            <ToastContainer />
           </tbody>
         </table>
       </div>
