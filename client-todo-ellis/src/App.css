@@ -15,6 +15,7 @@
 
 .App-header {
   background-color: #282c34;
+  /* background-color: #e17fe3; */
   min-height: 10vh;
   display: flex;
 
@@ -22,6 +23,7 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  /* color: rgb(255, 255, 255); */
 }
 
 .App-link {
@@ -49,7 +51,7 @@
 }
 
 #customers tr:nth-child(even) {
-  background-color: #f2f2f2;
+  background-color: #f2f2f2;  
 }
 
 #customers tr:hover {
@@ -61,5 +63,6 @@
   padding-bottom: 12px;
   text-align: left;
   background-color: #04aa6d;
+  /* background-color: #f3c0ef; */
   color: white;
 }

@@ -55,7 +55,7 @@ const App = () => {
           }}
         >
           {" "}
-          Opprett ny oppgave
+          Opprett ny oppgave                    
         </button>
       </div>
       {aapneNyttSkjema ? (

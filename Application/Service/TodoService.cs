@@ -7,7 +7,7 @@ using Persistence.Data.DBWrapper;
 
 namespace Application.Service
 {
-    public interface ITodoService
+   public interface ITodoService
     {
         List<TodoDto> GetTodoList();
         TodoDto GetTodoById(int id);
