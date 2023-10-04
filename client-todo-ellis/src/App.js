@@ -42,7 +42,6 @@ const App = () => {
     });
   };
 
-  console.log(editTodo);
   return (
     <div className="App">
       <div className="App-header">
@@ -55,7 +54,7 @@ const App = () => {
           }}
         >
           {" "}
-          Opprett ny oppgave                    
+          Opprett ny oppgave
         </button>
       </div>
       {aapneNyttSkjema ? (
@@ -79,12 +78,12 @@ const App = () => {
             </tr>
           </thead>
           <tbody>
-            {todoList?.map((item) => {
+            {todoList?.map((item, idx) => {
               return (
-                <tr key={item.id}>
+                <tr key={idx}>
                   <td>{moment(item.date).format("DD-MM-YYYY")}</td>
                   <td>{item.description}</td>
-                  <td>{item.isFinished === true ? "Completed" : "Active"}</td>
+                  <td>{item.isFinished === true ? "Fullført" : "Aktiv"}</td>
                   <td>
                     <button
                       type="button"
@@ -120,22 +119,22 @@ const App = () => {
                 </tr>
               );
             })}
-            {openEditSkjema ? (
-              <NewForm
-                aapneNyttSkjema={null}
-                setAapneNyttSkjema={null}
-                todoList={todoList}
-                setTodoList={setTodoList}
-                editTodoObj={editTodo}
-                openEditSkjema={openEditSkjema}
-                setOpenEditSkjema={setOpenEditSkjema}
-              />
-            ) : (
-              <></>
-            )}
-            <ToastContainer />
           </tbody>
         </table>
+        {openEditSkjema ? (
+          <NewForm
+            aapneNyttSkjema={null}
+            setAapneNyttSkjema={null}
+            todoList={todoList}
+            setTodoList={setTodoList}
+            editTodoObj={editTodo}
+            openEditSkjema={openEditSkjema}
+            setOpenEditSkjema={setOpenEditSkjema}
+          />
+        ) : (
+          <></>
+        )}
+        <ToastContainer />
       </div>
     </div>
   );

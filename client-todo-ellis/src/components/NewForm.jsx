@@ -16,17 +16,31 @@ export const NewForm = ({
 }) => {
   const [emne, setEmne] = useState("");
   const [dato, setDato] = useState("");
-  const [erFerdig, setErFerdig] = useState(false);
+  const [erFerdigState, setErFerdigState] = useState(false);
   useEffect(() => {
     if (editTodoObj != null) {
       setEmne(editTodoObj.emne);
       setDato(editTodoObj.dato);
+      setErFerdigState(editTodoObj.erFerdig);
     }
   }, [editTodoObj]);
 
+  const statusTodo = [
+    { id: 1, desc: "Aktiv" },
+    { id: 2, desc: "Fullført" },
+  ];
+
+  const handleOnChangeStatus = (e) => {
+    if (e === "Fullført") {
+      setErFerdigState(true);
+    } else {
+      setErFerdigState(false);
+    }
+  };
+
   const handleSubmit = (formData) => {
     formData.preventDefault();
-    debugger;
+
     if (formData == null) return;
 
     const { target } = formData;
@@ -35,14 +49,14 @@ export const NewForm = ({
     let date = new Date(todoObj.startDato);
     let desc = todoObj.beskrivelse;
     let id = editTodoObj?.id;
-    let status = editTodoObj?.erFerdig;
 
     if (id == null || id === 0) {
       let payload = {
         date: date,
         description: desc,
-        isFinished: status,
+        isFinished: todoObj?.erFerdig === "Fullført" ? true : false,
       };
+
       todoApi.apiV1TodoPost({ body: payload }, (error, data, response) => {
         if (response != null) {
           setTodoList([...todoList, response?.body]);
@@ -54,16 +68,21 @@ export const NewForm = ({
         if (openEditSkjema) setOpenEditSkjema(false);
       });
     } else {
-      debugger;
       let payload = {
         id: id,
         date: date,
         description: desc,
-        isFinished: status,
+        isFinished: todoObj?.erFerdig === "Fullført" ? true : false,
       };
       todoApi.apiV1TodoPut({ body: payload }, (error, data, response) => {
         if (response != null) {
-          setTodoList([...todoList, response?.body]);
+          const updatedList = todoList.map((exitingTodoList) => {
+            if (exitingTodoList.id === response.body.id) {
+              return { ...response.body };
+            }
+            return exitingTodoList;
+          });
+          setTodoList(updatedList);
           toast.success(`Oppgaven med id: ${payload.id} er oppdatert 🍬`, {
             position: toast.POSITION.TOP_RIGHT,
           });
@@ -102,18 +121,21 @@ export const NewForm = ({
           value={dato}
           onChange={(e) => {
             setDato(e.target.value);
-            console.log("Value of date ::: ", e.target.value);
           }}
         />
 
-        <span>Todo status</span>
+        <span>Todo status: </span>
         <select
-          id="erFerdig"
           name="erFerdig"
-          value={erFerdig}
-          onchange={(e) => setErFerdig(e.target.value)}
-        />
-
+          value={erFerdigState === true ? "Fullført" : "Aktiv"}
+          onChange={(e) => handleOnChangeStatus(e.target.value)}
+        >
+          {statusTodo.map((item, idx) => (
+            <option key={idx} value={item.desc}>
+              {item.desc}
+            </option>
+          ))}
+        </select>
         <button type="submit">OK</button>
         <button
           type="button"
