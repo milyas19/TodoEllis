@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { TodoApi } from "../api/TodoApi";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
+import "./../App.css";
 
 const todoApi = new TodoApi();
 
@@ -94,27 +95,34 @@ export const NewForm = ({
   };
 
   return (
-    <dialog open>
-      <div>Todo </div>
+    <dialog open className="todoDialog">
+      <div className="todoDialogHeading">Todo</div>
       <form
+        className="todoForm"
         method="dialog"
         onSubmit={(formData) => {
           handleSubmit(formData);
         }}
       >
-        <span>Beskrivelse</span>
+        <span className="labelText">Beskrivelse: </span>
         <input
+          className="beskrivelseInput"
           type="text"
           id="beskrivelse"
           name="beskrivelse"
           value={emne}
+          maxLength={60}
+          required
           onChange={(event) => {
             setEmne(event.target.value);
           }}
         />
-
-        <span>Start date:</span>
+        {emne.length}/60
+        <br />
+        <span className="labelText">Start date:</span>
         <input
+          className="startDatoInput"
+          required
           type="date"
           id="startDato"
           name="startDato"
@@ -123,9 +131,10 @@ export const NewForm = ({
             setDato(e.target.value);
           }}
         />
-
-        <span>Todo status: </span>
+        <br />
+        <span className="labelText">Todo status: </span>
         <select
+          className="statusInput"
           name="erFerdig"
           value={erFerdigState === true ? "Fullført" : "Aktiv"}
           onChange={(e) => handleOnChangeStatus(e.target.value)}
@@ -136,16 +145,22 @@ export const NewForm = ({
             </option>
           ))}
         </select>
-        <button type="submit">OK</button>
-        <button
-          type="button"
-          onClick={() => {
-            if (aapneNyttSkjema) setAapneNyttSkjema(false);
-            if (openEditSkjema) setOpenEditSkjema(false);
-          }}
-        >
-          Cancel
-        </button>
+        <br />
+        <div className="buttonSection">
+          <button type="submit" className="button-62">
+            OK
+          </button>
+          <button
+            className="button-62 btnCancle"
+            type="button"
+            onClick={() => {
+              if (aapneNyttSkjema) setAapneNyttSkjema(false);
+              if (openEditSkjema) setOpenEditSkjema(false);
+            }}
+          >
+            Cancel
+          </button>
+        </div>
       </form>
     </dialog>
   );

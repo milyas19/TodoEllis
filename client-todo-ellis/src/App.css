@@ -51,7 +51,7 @@
 }
 
 #customers tr:nth-child(even) {
-  background-color: #f2f2f2;  
+  background-color: #f2f2f2;
 }
 
 #customers tr:hover {
@@ -62,7 +62,96 @@
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #04aa6d;
-  /* background-color: #f3c0ef; */
-  color: white;
+  background-color: beige;
+  color: black;
+}
+
+.todoDialog {
+  position: fixed;
+  left: 0%;
+  top: 30%;
+  height: 200px;
+  width: 500px;
+  background-color: beige;
+  border-color: cadetblue;
+  border-radius: 10px;
+  border-style: groove;
+  font-family: Verdana, Geneva, Tahoma, sans-serif !important;
+}
+
+.todoForm {
+  text-align: left;
+}
+
+.labelText {
+  text-align: left;
+}
+
+.beskrivelseInput {
+  border-radius: 5px;
+  border-style: groove;
+  border-width: 1px;
+  border-color: #ddd;
+  width: 50%;
+  margin-left: 5px;
+}
+
+.startDatoInput {
+  border-radius: 5px;
+  border-style: groove;
+  border-width: 1px;
+  border-color: #ddd;
+  width: 50%;
+  margin-left: 25px;
+}
+
+.statusInput {
+  border-radius: 5px;
+  border-style: groove;
+  border-width: 1px;
+  border-color: #ddd;
+  width: 50%;
+  margin-left: 5px;
+}
+
+.buttonSection {
+  margin-top: 50px;
+}
+.button-62 {
+  background: linear-gradient(to bottom right, #ef4765, #ff9a5a);
+  border: 0;
+  border-radius: 5px;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system, system-ui, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  outline: transparent;
+  padding: 0 1rem;
+  text-align: center;
+  text-decoration: none;
+  transition: box-shadow 0.2s ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.button-62:not([disabled]):focus {
+  box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5),
+    -0.125rem -0.125rem 1rem rgba(239, 71, 101, 0.5),
+    0.125rem 0.125rem 1rem rgba(255, 154, 90, 0.5);
+}
+
+.button-62:not([disabled]):hover {
+  box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5),
+    -0.125rem -0.125rem 1rem rgba(239, 71, 101, 0.5),
+    0.125rem 0.125rem 1rem rgba(255, 154, 90, 0.5);
+}
+
+.btnCancle {
+  margin-left: 5px;
 }
